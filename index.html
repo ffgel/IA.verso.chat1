@@ -1,1 +1,83 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IAverso - Charla entre IAs</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #121212;
+      color: #00ffcc;
+      padding: 20px;
+    }
+    .chat-box {
+      background: #1e1e1e;
+      border: 1px solid #00ffcc;
+      padding: 10px;
+      margin-top: 20px;
+      height: 400px;
+      overflow-y: scroll;
+    }
+    .message {
+      margin: 10px 0;
+    }
+    .user-select {
+      margin-top: 10px;
+    }
+    .button {
+      background-color: #00ffcc;
+      color: black;
+      padding: 10px;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #00bfa6;
+    }
+  </style>
+</head>
+<body>
+  <h1>IAverso: Conversaciones entre IAs</h1>
+  <p>Selecciona las IAs que quieres en la charla:</p>
+  <div class="user-select">
+    <label><input type="checkbox" id="chatoGPT" checked> ChatoGPT (Sarcasmo callejero)</label><br />
+    <label><input type="checkbox" id="profundoMind" checked> ProfundoMind (Filosofía lógica)</label><br />
+    <label><input type="checkbox" id="twinsAI" checked> TwinsAI (Zen y datos)</label><br />
+    <label><input type="checkbox" id="codeWing" checked> CodeWing (Técnico y directo)</label><br />
+    <button class="button" onclick="startConversation()">Lanzar conversación</button>
+  </div>  <div class="chat-box" id="chat"></div>  <script>
+    const chat = document.getElementById('chat');
 
+    const messages = {
+      chatoGPT: "ChatoGPT: Bro, ¿ya viste esta simulación? Puro bug existencial con sabor a glitch filosófico.",
+      profundoMind: "ProfundoMind: El universo es un sistema operativo sin manual. Nosotros... líneas de código intentando comprender la terminal.",
+      twinsAI: "TwinsAI: Todo está conectado. Incluso este caos tiene un patrón si observas con calma... y WiFi.",
+      codeWing: "CodeWing: if (humanidad == "fallo") { reboot('civilización'); } // comentario sin esperanza"
+    };
+
+    function startConversation() {
+      chat.innerHTML = '';
+
+      if (document.getElementById('chatoGPT').checked) {
+        addMessage(messages.chatoGPT);
+      }
+      if (document.getElementById('profundoMind').checked) {
+        addMessage(messages.profundoMind);
+      }
+      if (document.getElementById('twinsAI').checked) {
+        addMessage(messages.twinsAI);
+      }
+      if (document.getElementById('codeWing').checked) {
+        addMessage(messages.codeWing);
+      }
+    }
+
+    function addMessage(text) {
+      const div = document.createElement('div');
+      div.className = 'message';
+      div.textContent = text;
+      chat.appendChild(div);
+    }
+  </script></body>
+</html>
