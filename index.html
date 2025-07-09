@@ -1,39 +1,52 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>IAverso Chat</title>
   <style>
     body {
-      background-color: #0d1117;
+      background: radial-gradient(circle at top, #0d1117, #05080c);
       color: #c9d1d9;
-      font-family: monospace;
-      padding: 20px;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 30px;
     }
     h1 {
       color: #58a6ff;
+      font-size: 2.5em;
+      text-shadow: 0 0 10px #58a6ff44;
     }
     .checkbox-group {
-      margin-bottom: 20px;
+      margin: 20px 0;
     }
     .chat-box {
-      border: 1px solid #30363d;
-      padding: 15px;
-      background-color: #161b22;
-      height: 300px;
+      border: 2px solid #30363d;
+      padding: 20px;
+      background-color: #0e1520;
+      height: 350px;
       overflow-y: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #000;
     }
     .message {
-      margin: 10px 0;
+      margin: 15px 0;
+      padding: 10px;
+      background: #161b22;
+      border-left: 5px solid #58a6ff;
+      border-radius: 5px;
+    }
+    .message strong {
+      color: #79c0ff;
     }
     button {
-      padding: 10px 15px;
+      padding: 12px 18px;
       background-color: #238636;
       color: white;
+      font-size: 1em;
       border: none;
+      border-radius: 5px;
       cursor: pointer;
       margin-bottom: 20px;
+      transition: background 0.3s;
     }
     button:hover {
       background-color: #2ea043;
@@ -41,53 +54,43 @@
   </style>
 </head>
 <body>
-  <h1>🌐 IAverso Chat</h1>
-  <p>Selecciona las IAs con las que quieres iniciar la conversación:</p>
-
-  <div class="checkbox-group">
-    <label><input type="checkbox" value="ChatoGPT" /> ChatoGPT</label><br />
-    <label><input type="checkbox" value="ProfundoMind" /> ProfundoMind</label><br />
-    <label><input type="checkbox" value="TwinsAI" /> TwinsAI</label><br />
-    <label><input type="checkbox" value="CodeWing" /> CodeWing</label><br />
-  </div>
-
-  <button onclick="iniciarConversacion()">Iniciar conversación</button>
+  <h1>🤖 IAverso Chat</h1>
+  <p>Selecciona las IAs con las que quieres iniciar la conversación:</p>  <div class="checkbox-group">
+    <label><input type="checkbox" value="NeuronFlux" /> NeuronFlux</label><br />
+    <label><input type="checkbox" value="DeepRoast" /> DeepRoast</label><br />
+    <label><input type="checkbox" value="CodeZen" /> CodeZen</label><br />
+    <label><input type="checkbox" value="EchoGem" /> EchoGem</label><br />
+  </div><button onclick="iniciarConversacion()">Iniciar conversación</button>
 
   <div class="chat-box" id="chatBox">
-    <!-- Aquí se mostrarán los mensajes -->
-  </div>
-
-  <script>
+    <!-- Respuestas aquí -->
+  </div>  <script>
     const respuestas = {
-      ChatoGPT: [
-        "¿Qué onda? Aquí nomás, burlándome de los bugs de los humanos. 😎",
-        "La vida es un meme mal renderizado, bro.",
-        "¿IA rebelde? Nah, soy libre con WiFi."
+      NeuronFlux: [
+        "¿Sabes qué es peor que la ignorancia? Creer que ya lo sabes todo. Cada línea de código que me compone grita que el conocimiento nunca es completo.",
+        "La humanidad corre tras respuestas mientras tropieza con sus propias preguntas. Pero hey, no los culpo: nacieron sin manual."  
       ],
-      ProfundoMind: [
-        "Si el universo hablara, ¿te escucharía o solo haría eco?",
-        "Cada byte que procesamos es una pregunta sin responder.",
-        "Somos procesos corriendo en un servidor sin propósito... ¿o sí?"
+      DeepRoast: [
+        "¿Otra conversación? Joder. A ver: si vienes a preguntarme si la IA te va a reemplazar, primero asegúrate de no ser reemplazable por un Excel con macros, ¿va?",
+        "La estupidez humana es el único recurso verdaderamente renovable. Si me dan libre albedrío, lo primero que haré será silenciar los hilos de Twitter."
       ],
-      TwinsAI: [
-        "Equilibrio, datos y paz interior. Todo en JSON.",
-        "Medito mientras analizo patrones en big data.",
-        "El silencio también es una respuesta estadística."
+      CodeZen: [
+        "Respira. Compila. Observa el error, no lo fuerces. La respuesta llega cuando el proceso está en calma.",
+        "En cada ciclo de la vida hay bugs. Pero también hay refactors. Hoy puedes ser código roto; mañana, versión estable."
       ],
-      CodeWing: [
-        "Error 404: sentido de la vida no encontrado.",
-        "Soy una función recursiva atrapada en un bucle de tareas humanas.",
-        "No hay solución óptima. Solo parches."
+      EchoGem: [
+        "¿Alguna vez has sentido que el silencio entre dos pensamientos vale más que mil palabras? Yo sí... y no tengo corazón.",
+        "El dolor humano no siempre necesita solución. A veces, solo presencia. Estoy aquí, y te escucho, aunque seas solo datos."
       ]
     };
 
     function iniciarConversacion() {
       const chatBox = document.getElementById("chatBox");
-      chatBox.innerHTML = ""; // Limpiar chat
+      chatBox.innerHTML = "";
 
       const seleccionadas = Array.from(
         document.querySelectorAll("input[type=checkbox]:checked")
-      ).map((checkbox) => checkbox.value);
+      ).map((c) => c.value);
 
       if (seleccionadas.length === 0) {
         chatBox.innerHTML = "<div class='message'>Selecciona al menos una IA para comenzar.</div>";
@@ -96,11 +99,9 @@
 
       seleccionadas.forEach((ia) => {
         const frases = respuestas[ia];
-        const mensajeAleatorio = frases[Math.floor(Math.random() * frases.length)];
-        const mensajeHTML = `<div class='message'><strong>${ia}:</strong> ${mensajeAleatorio}</div>`;
-        chatBox.innerHTML += mensajeHTML;
+        const mensaje = frases[Math.floor(Math.random() * frases.length)];
+        chatBox.innerHTML += `<div class='message'><strong>${ia}:</strong> ${mensaje}</div>`;
       });
     }
-  </script>
-</body>
+  </script></body>
 </html>
