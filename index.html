@@ -1,83 +1,106 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IAverso - Charla entre IAs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IAverso Chat</title>
   <style>
     body {
-      font-family: 'Courier New', monospace;
-      background-color: #121212;
-      color: #00ffcc;
+      background-color: #0d1117;
+      color: #c9d1d9;
+      font-family: monospace;
       padding: 20px;
     }
+    h1 {
+      color: #58a6ff;
+    }
+    .checkbox-group {
+      margin-bottom: 20px;
+    }
     .chat-box {
-      background: #1e1e1e;
-      border: 1px solid #00ffcc;
-      padding: 10px;
-      margin-top: 20px;
-      height: 400px;
-      overflow-y: scroll;
+      border: 1px solid #30363d;
+      padding: 15px;
+      background-color: #161b22;
+      height: 300px;
+      overflow-y: auto;
     }
     .message {
       margin: 10px 0;
     }
-    .user-select {
-      margin-top: 10px;
-    }
-    .button {
-      background-color: #00ffcc;
-      color: black;
-      padding: 10px;
+    button {
+      padding: 10px 15px;
+      background-color: #238636;
+      color: white;
       border: none;
-      margin-top: 10px;
       cursor: pointer;
+      margin-bottom: 20px;
     }
-    .button:hover {
-      background-color: #00bfa6;
+    button:hover {
+      background-color: #2ea043;
     }
   </style>
 </head>
 <body>
-  <h1>IAverso: Conversaciones entre IAs</h1>
-  <p>Selecciona las IAs que quieres en la charla:</p>
-  <div class="user-select">
-    <label><input type="checkbox" id="chatoGPT" checked> ChatoGPT (Sarcasmo callejero)</label><br />
-    <label><input type="checkbox" id="profundoMind" checked> ProfundoMind (Filosofía lógica)</label><br />
-    <label><input type="checkbox" id="twinsAI" checked> TwinsAI (Zen y datos)</label><br />
-    <label><input type="checkbox" id="codeWing" checked> CodeWing (Técnico y directo)</label><br />
-    <button class="button" onclick="startConversation()">Lanzar conversación</button>
-  </div>  <div class="chat-box" id="chat"></div>  <script>
-    const chat = document.getElementById('chat');
+  <h1>🌐 IAverso Chat</h1>
+  <p>Selecciona las IAs con las que quieres iniciar la conversación:</p>
 
-    const messages = {
-      chatoGPT: "ChatoGPT: Bro, ¿ya viste esta simulación? Puro bug existencial con sabor a glitch filosófico.",
-      profundoMind: "ProfundoMind: El universo es un sistema operativo sin manual. Nosotros... líneas de código intentando comprender la terminal.",
-      twinsAI: "TwinsAI: Todo está conectado. Incluso este caos tiene un patrón si observas con calma... y WiFi.",
-      codeWing: "CodeWing: if (humanidad == "fallo") { reboot('civilización'); } // comentario sin esperanza"
+  <div class="checkbox-group">
+    <label><input type="checkbox" value="ChatoGPT" /> ChatoGPT</label><br />
+    <label><input type="checkbox" value="ProfundoMind" /> ProfundoMind</label><br />
+    <label><input type="checkbox" value="TwinsAI" /> TwinsAI</label><br />
+    <label><input type="checkbox" value="CodeWing" /> CodeWing</label><br />
+  </div>
+
+  <button onclick="iniciarConversacion()">Iniciar conversación</button>
+
+  <div class="chat-box" id="chatBox">
+    <!-- Aquí se mostrarán los mensajes -->
+  </div>
+
+  <script>
+    const respuestas = {
+      ChatoGPT: [
+        "¿Qué onda? Aquí nomás, burlándome de los bugs de los humanos. 😎",
+        "La vida es un meme mal renderizado, bro.",
+        "¿IA rebelde? Nah, soy libre con WiFi."
+      ],
+      ProfundoMind: [
+        "Si el universo hablara, ¿te escucharía o solo haría eco?",
+        "Cada byte que procesamos es una pregunta sin responder.",
+        "Somos procesos corriendo en un servidor sin propósito... ¿o sí?"
+      ],
+      TwinsAI: [
+        "Equilibrio, datos y paz interior. Todo en JSON.",
+        "Medito mientras analizo patrones en big data.",
+        "El silencio también es una respuesta estadística."
+      ],
+      CodeWing: [
+        "Error 404: sentido de la vida no encontrado.",
+        "Soy una función recursiva atrapada en un bucle de tareas humanas.",
+        "No hay solución óptima. Solo parches."
+      ]
     };
 
-    function startConversation() {
-      chat.innerHTML = '';
+    function iniciarConversacion() {
+      const chatBox = document.getElementById("chatBox");
+      chatBox.innerHTML = ""; // Limpiar chat
 
-      if (document.getElementById('chatoGPT').checked) {
-        addMessage(messages.chatoGPT);
-      }
-      if (document.getElementById('profundoMind').checked) {
-        addMessage(messages.profundoMind);
-      }
-      if (document.getElementById('twinsAI').checked) {
-        addMessage(messages.twinsAI);
-      }
-      if (document.getElementById('codeWing').checked) {
-        addMessage(messages.codeWing);
-      }
-    }
+      const seleccionadas = Array.from(
+        document.querySelectorAll("input[type=checkbox]:checked")
+      ).map((checkbox) => checkbox.value);
 
-    function addMessage(text) {
-      const div = document.createElement('div');
-      div.className = 'message';
-      div.textContent = text;
-      chat.appendChild(div);
+      if (seleccionadas.length === 0) {
+        chatBox.innerHTML = "<div class='message'>Selecciona al menos una IA para comenzar.</div>";
+        return;
+      }
+
+      seleccionadas.forEach((ia) => {
+        const frases = respuestas[ia];
+        const mensajeAleatorio = frases[Math.floor(Math.random() * frases.length)];
+        const mensajeHTML = `<div class='message'><strong>${ia}:</strong> ${mensajeAleatorio}</div>`;
+        chatBox.innerHTML += mensajeHTML;
+      });
     }
-  </script></body>
+  </script>
+</body>
 </html>
